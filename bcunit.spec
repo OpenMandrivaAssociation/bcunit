@@ -5,7 +5,7 @@
 
 Name:		bcunit
 Version:	3.0.2
-Release:	1
+Release:	2
 License:	GPLv2+
 Summary:	A Unit Testing Framework for C, based on (abandoned) CUnit
 Group:		System/Libraries
