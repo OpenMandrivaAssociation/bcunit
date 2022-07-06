@@ -1,18 +1,30 @@
-%define Name BCUnit
+%define oname BCUnit
+%define name %(echo %oname | tr [:upper:] {:lower:])
+
 %define	major 1
 %define	libname %mklibname %{name} %{major}
 %define develname %mklibname %{name} -d
 
+%bcond_without	ncurses
+%bcond_with	static
+
+# NOTE: use commit if the last release is too old
+%define commit e3557aed8ba22e04047a9e4371a331b863081fc8
+
 Name:		bcunit
 Version:	3.0.2
-Release:	2
+Release:	3
 License:	GPLv2+
 Summary:	A Unit Testing Framework for C, based on (abandoned) CUnit
 Group:		System/Libraries
 URL:		https://github.com/BelledonneCommunications/bcunit
-Source0:	https://github.com/BelledonneCommunications/bcunit/archive/%{version}.tar.gz
+Source0:	https://gitlab.linphone.org/BC/public/%{name}/-/archive/%{?commit:%{commit}}%{!?commit:%{version}}/%{name}-%{?commit:%{commit}}%{!?commit:%{version}}.tar.bz2
+BuildRequires:	cmake
+BuildRequires:	ninja
+%if %{with ncurses}
 BuildRequires:	pkgconfig(ncurses)
-BuildRequires:	cmake ninja
+%endif
+
 
 %description
 BCUnit is a lightweight system for writing, administering, and running unit
@@ -31,6 +43,8 @@ These interfaces currently include:
 - Curses: Interactive graphical interface (Unix)
 
 It is based on the abandoned CUnit.
+
+#---------------------------------------------------------------------------
 
 %package -n %{libname}
 Summary:	C testing framework
@@ -54,34 +68,45 @@ These interfaces currently include:
 
 It is based on the abandoned CUnit.
 
+%files -n %{libname}
+%{_libdir}/*.so.%{major}*
+
+#---------------------------------------------------------------------------
+
 %package -n %{develname}
 Summary:	Development files for %{name}
 Group:		Development/C
 Requires:	%{libname} = %{version}-%{release}
 Provides:	%{name}-devel = %{version}-%{release}
 Provides:	lib%{name}-devel = %{version}-%{release}
-Obsoletes:	%mklibname %{name} 1 -d
 
 %description -n	%{develname}
 This package contains development files for %{name}.
 
+%files -n %{develname}
+%{_libdir}/*.so
+%if %{with static}
+%{_libdir}/*.a
+%endif
+%{_libdir}/pkgconfig/%{name}.pc
+%{_includedir}/%{oname}
+%{_datadir}/%{oname}
+%{_datadir}/BCunit
+
+#---------------------------------------------------------------------------
+
 %prep
-%autosetup -p1
-%cmake -G Ninja
+%autosetup -p1 -n %{name}-%{?commit:%{commit}}%{!?commit:%{version}}
 
 %build
-%ninja_build -C build
+%cmake \
+	-DENABLE_STRICT:BOOL=ON \
+	-DENABLE_STATIC:BOOL=%{?with_static:ON}%{?!with_static:OFF} \
+	-DENABLE_CURSES:BOLL=%{?with_ncurses:ON}%{?!with_ncurses:OFF} \
+	-G Ninja
+
+%ninja_build #-C build
 
 %install
 %ninja_install -C build
 
-%files -n %{libname}
-%{_libdir}/*.so.%{major}*
-
-%files -n %{develname}
-%{_libdir}/*.so
-%{_libdir}/*.a
-%{_libdir}/pkgconfig/%{name}.pc
-%{_includedir}/%{Name}
-%{_datadir}/%{Name}
-%{_datadir}/BCunit
