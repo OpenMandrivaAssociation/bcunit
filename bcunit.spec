@@ -7,6 +7,7 @@
 
 %bcond_without	ncurses
 %bcond_with	static
+%bcond_without	strict
 
 # NOTE: use commit if the last release is too old
 %define commit e3557aed8ba22e04047a9e4371a331b863081fc8
@@ -100,7 +101,7 @@ This package contains development files for %{name}.
 
 %build
 %cmake \
-	-DENABLE_STRICT:BOOL=ON \
+	-DENABLE_STRICT:BOOL=%{?with_static:ON}%{?!with_static:OFF} \
 	-DENABLE_STATIC:BOOL=%{?with_static:ON}%{?!with_static:OFF} \
 	-DENABLE_CURSES:BOLL=%{?with_ncurses:ON}%{?!with_ncurses:OFF} \
 	-G Ninja
