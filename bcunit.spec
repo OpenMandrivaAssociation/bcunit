@@ -2,8 +2,8 @@
 %define name %(echo %oname | tr [:upper:] {:lower:])
 
 %define	major 1
-%define	libname %mklibname %{name} %{major}
-%define develname %mklibname %{name} -d
+%define	libname %mklibname %{name}
+%define devname %mklibname %{name} -d
 
 %bcond_without	ncurses
 %bcond_with	static
@@ -13,7 +13,7 @@
 
 Name:		bcunit
 Version:	3.0.2
-Release:	3
+Release:	4
 License:	GPLv2+
 Summary:	A Unit Testing Framework for C, based on (abandoned) CUnit
 Group:		System/Libraries
@@ -73,17 +73,17 @@ It is based on the abandoned CUnit.
 
 #---------------------------------------------------------------------------
 
-%package -n %{develname}
+%package -n %{devname}
 Summary:	Development files for %{name}
 Group:		Development/C
 Requires:	%{libname} = %{version}-%{release}
 Provides:	%{name}-devel = %{version}-%{release}
 Provides:	lib%{name}-devel = %{version}-%{release}
 
-%description -n	%{develname}
+%description -n	%{devname}
 This package contains development files for %{name}.
 
-%files -n %{develname}
+%files -n %{devname}
 %{_libdir}/*.so
 %if %{with static}
 %{_libdir}/*.a
