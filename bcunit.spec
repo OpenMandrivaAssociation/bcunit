@@ -10,11 +10,10 @@
 %bcond_without	strict
 
 # NOTE: use commit if the last release is too old
-%define commit e3557aed8ba22e04047a9e4371a331b863081fc8
-
+%define commit e9101548b1aba4298a18c3817ebee053c7f3a0a7
 Name:		bcunit
 Version:	3.0.2
-Release:	4
+Release:	5
 License:	GPLv2+
 Summary:	A Unit Testing Framework for C, based on (abandoned) CUnit
 Group:		System/Libraries
