@@ -10,10 +10,11 @@
 %bcond_without	strict
 
 # NOTE: use commit if the last release is too old
-%define commit e9101548b1aba4298a18c3817ebee053c7f3a0a7
+#%%define commit e9101548b1aba4298a18c3817ebee053c7f3a0a7
+
 Name:		bcunit
-Version:	3.0.2
-Release:	5
+Version:	5.2.0
+Release:	1
 License:	GPLv2+
 Summary:	A Unit Testing Framework for C, based on (abandoned) CUnit
 Group:		System/Libraries
@@ -100,8 +101,8 @@ This package contains development files for %{name}.
 
 %build
 %cmake \
-	-DENABLE_STRICT:BOOL=%{?with_strict:ON}%{?!with_strict:OFF} \
 	-DENABLE_STATIC:BOOL=%{?with_static:ON}%{?!with_static:OFF} \
+	-DENABLE_STRICT:BOOL=%{?with_strict:ON}%{?!with_strict:OFF} \
 	-DENABLE_CURSES:BOOL=%{?with_ncurses:ON}%{?!with_ncurses:OFF} \
 	-G Ninja
 
