@@ -13,8 +13,8 @@
 #%%define commit e9101548b1aba4298a18c3817ebee053c7f3a0a7
 
 Name:		bcunit
-Version:	5.2.0
-Release:	2
+Version:	5.2.62
+Release:	1
 License:	GPLv2+
 Summary:	A Unit Testing Framework for C, based on (abandoned) CUnit
 Group:		System/Libraries
