@@ -26,7 +26,6 @@ BuildRequires:	ninja
 BuildRequires:	pkgconfig(ncurses)
 %endif
 
-
 %description
 BCUnit is a lightweight system for writing, administering, and running unit
 tests in C.  It provides C programmers a basic testing functionality with a
@@ -92,7 +91,7 @@ This package contains development files for %{name}.
 %{_libdir}/pkgconfig/%{name}.pc
 %{_includedir}/%{oname}
 %{_datadir}/%{oname}
-%{_datadir}/BCunit
+%{_datadir}/BCUnit
 
 #---------------------------------------------------------------------------
 
