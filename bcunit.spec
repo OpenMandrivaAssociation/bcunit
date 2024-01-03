@@ -9,8 +9,6 @@
 %bcond_with	static
 %bcond_without	strict
 
-# NOTE: use commit if the last release is too old
-#%%define commit e9101548b1aba4298a18c3817ebee053c7f3a0a7
 
 Name:		bcunit
 Version:	5.3.5
@@ -19,7 +17,8 @@ License:	GPLv2+
 Summary:	A Unit Testing Framework for C, based on (abandoned) CUnit
 Group:		System/Libraries
 URL:		https://github.com/BelledonneCommunications/bcunit
-Source0:	https://gitlab.linphone.org/BC/public/%{name}/-/archive/%{?commit:%{commit}}%{!?commit:%{version}}/%{name}-%{?commit:%{commit}}%{!?commit:%{version}}.tar.bz2
+Source0:	https://gitlab.linphone.org/BC/public/%{name}/-/archive/%{version}/%{name}-%{version}.tar.bz2
+Patch:		bcunit-5.3.5-cmake-fix_cmake_path.patch
 BuildRequires:	cmake
 BuildRequires:	ninja
 %if %{with ncurses}
@@ -91,6 +90,7 @@ This package contains development files for %{name}.
 %{_libdir}/pkgconfig/%{name}.pc
 %{_includedir}/%{oname}
 %{_datadir}/%{oname}
+%{_datadir}/cmake/%{oname}
 
 #---------------------------------------------------------------------------
 
