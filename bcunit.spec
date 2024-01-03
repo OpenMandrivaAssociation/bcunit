@@ -18,7 +18,7 @@ Summary:	A Unit Testing Framework for C, based on (abandoned) CUnit
 Group:		System/Libraries
 URL:		https://github.com/BelledonneCommunications/bcunit
 Source0:	https://gitlab.linphone.org/BC/public/%{name}/-/archive/%{version}/%{name}-%{version}.tar.bz2
-Patch:		bcunit-5.3.5-cmake-fix_cmake_path.patch
+Patch0:		bcunit-5.3.5-cmake-fix_cmake_path.patch
 BuildRequires:	cmake
 BuildRequires:	ninja
 %if %{with ncurses}
