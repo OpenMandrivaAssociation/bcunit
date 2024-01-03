@@ -91,7 +91,6 @@ This package contains development files for %{name}.
 %{_libdir}/pkgconfig/%{name}.pc
 %{_includedir}/%{oname}
 %{_datadir}/%{oname}
-%{_datadir}/BCUnit
 
 #---------------------------------------------------------------------------
 
