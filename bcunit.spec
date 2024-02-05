@@ -1,18 +1,20 @@
 %define oname BCUnit
 %define name %(echo %oname | tr [:upper:] {:lower:])
 
-%define	major 1
-%define	libname %mklibname %{name}
-%define devname %mklibname %{name} -d
+%define major	1
+%define libname	%mklibname %{name}
+%define devname	%mklibname %{name} -d
+
+# exclude unwanted cmake requires
+%global __provides_exclude_from ^%{_datadir}/cmake/*/Find.*cmake$
 
 %bcond_without	ncurses
 %bcond_with	static
 %bcond_without	strict
 
-
 Name:		bcunit
 Version:	5.3.13
-Release:	1
+Release:	2
 License:	GPLv2+
 Summary:	A Unit Testing Framework for C, based on (abandoned) CUnit
 Group:		System/Libraries
