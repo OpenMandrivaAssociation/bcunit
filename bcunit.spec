@@ -13,8 +13,8 @@
 %bcond_without	strict
 
 Name:		bcunit
-Version:	5.3.13
-Release:	2
+Version:	5.3.19
+Release:	1
 License:	GPLv2+
 Summary:	A Unit Testing Framework for C, based on (abandoned) CUnit
 Group:		System/Libraries
