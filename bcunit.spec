@@ -11,7 +11,7 @@
 %bcond curses	1
 
 Name:		bcunit
-Version:	5.3.93
+Version:	5.3.94
 Release:	1
 License:	GPLv2+
 Summary:	A Unit Testing Framework for C, based on (abandoned) CUnit
