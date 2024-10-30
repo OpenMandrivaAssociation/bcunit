@@ -8,12 +8,10 @@
 # exclude unwanted cmake requires
 %global __provides_exclude_from ^%{_datadir}/cmake/.*/Find.*cmake$
 
-%bcond_without	ncurses
-%bcond_with	static
-%bcond_without	strict
+%bcond curses	1
 
 Name:		bcunit
-Version:	5.3.83
+Version:	5.3.93
 Release:	1
 License:	GPLv2+
 Summary:	A Unit Testing Framework for C, based on (abandoned) CUnit
@@ -28,22 +26,24 @@ BuildRequires:	pkgconfig(ncurses)
 %endif
 
 %description
-BCUnit is a lightweight system for writing, administering, and running unit
-tests in C.  It provides C programmers a basic testing functionality with a
-flexible variety of user interfaces.
+This is BCUnit, a fork of the defunct project CUnit (see below), with several
+fixes and patches applied.
 
-BCUnit is built as a static library which is linked with the user's testing
-code.  It uses a simple framework for building test structures, and provides a
-rich set of assertions for testing common data types. In addition, several
-different interfaces are provided for running tests and reporting results.
-These interfaces currently include:
+BCUnit is platform/version independent and should be portable to all platforms.
+BCUnit provides various interfaces to the framework, some of which are platform
+dependent (e.g. curses on *nix).  Building other interfaces should be
+straightforward with the facilities provided in the framework.
 
-- Automated: Non-interactive output to xml file
-- Basic: Non-interactive flexible programming interface
-- Console: Interactive console interface (ansi C)
-- Curses: Interactive graphical interface (Unix)
+BCUnit is built as shared library which provides framework support when linkedù
+into user testing code.  The framework complies with the conventional structure
+of test cases bundled into suites which are registered with the framework for
+running.  See the documentation for more about the structure and use of the
+framework.
 
-It is based on the abandoned CUnit.
+  * Automated: Non-interactive output to xml file
+  * Basic: Non-interactive flexible programming interface
+  * Console: Interactive console interface (ansi C)
+  * Curses: Interactive graphical interface (Unix)
 
 #---------------------------------------------------------------------------
 
@@ -52,22 +52,24 @@ Summary:	C testing framework
 Group:		System/Libraries
 
 %description -n %{libname}
-BCUnit is a lightweight system for writing, administering, and running unit
-tests in C.  It provides C programmers a basic testing functionality with a
-flexible variety of user interfaces.
+This is BCUnit, a fork of the defunct project CUnit (see below), with several
+fixes and patches applied.
 
-BCUnit is built as a static library which is linked with the user's testing
-code.  It uses a simple framework for building test structures, and provides a
-rich set of assertions for testing common data types. In addition, several
-different interfaces are provided for running tests and reporting results.
-These interfaces currently include:
+BCUnit is platform/version independent and should be portable to all platforms.
+BCUnit provides various interfaces to the framework, some of which are platform
+dependent (e.g. curses on *nix).  Building other interfaces should be
+straightforward with the facilities provided in the framework.
 
-- Automated: Non-interactive output to xml file
-- Basic: Non-interactive flexible programming interface
-- Console: Interactive console interface (ansi C)
-- Curses: Interactive graphical interface (Unix)
+BCUnit is built as shared library which provides framework support when linkedù
+into user testing code.  The framework complies with the conventional structure
+of test cases bundled into suites which are registered with the framework for
+running.  See the documentation for more about the structure and use of the
+framework.
 
-It is based on the abandoned CUnit.
+  * Automated: Non-interactive output to xml file
+  * Basic: Non-interactive flexible programming interface
+  * Console: Interactive console interface (ansi C)
+  * Curses: Interactive graphical interface (Unix)
 
 %files -n %{libname}
 %{_libdir}/*.so.%{major}*
@@ -86,9 +88,6 @@ This package contains development files for %{name}.
 
 %files -n %{devname}
 %{_libdir}/*.so
-%if %{with static}
-%{_libdir}/*.a
-%endif
 %{_libdir}/pkgconfig/%{name}.pc
 %{_includedir}/%{oname}
 %{_datadir}/%{oname}
@@ -101,9 +100,8 @@ This package contains development files for %{name}.
 
 %build
 %cmake \
-	-DENABLE_STATIC:BOOL=%{?with_static:ON}%{?!with_static:OFF} \
-	-DENABLE_STRICT:BOOL=%{?with_strict:ON}%{?!with_strict:OFF} \
 	-DENABLE_CURSES:BOOL=%{?with_ncurses:ON}%{?!with_ncurses:OFF} \
+	-DBUILD_TEST:BOOL=%{?with_test:ON}%{?!with_test:OFF} \
 	-G Ninja
 
 %ninja_build #-C build
