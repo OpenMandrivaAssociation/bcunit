@@ -8,22 +8,32 @@
 # exclude unwanted cmake requires
 %global __provides_exclude_from ^%{_datadir}/cmake/.*/Find.*cmake$
 
-%bcond curses	1
+%bcond_without curses
+%bcond_with example
+%bcond_without test
 
 Name:		bcunit
-Version:	5.4.17
+Version:	5.4.42
 Release:	1
 License:	GPLv2+
 Summary:	A Unit Testing Framework for C, based on (abandoned) CUnit
 Group:		System/Libraries
 URL:		https://github.com/BelledonneCommunications/bcunit
 Source0:	https://gitlab.linphone.org/BC/public/%{name}/-/archive/%{version}/%{name}-%{version}.tar.bz2
-Patch0:		bcunit-5.3.5-cmake-fix_cmake_path.patch
 BuildRequires:	cmake
 BuildRequires:	ninja
-%if %{with ncurses}
+%if %{with curses}
 BuildRequires:	pkgconfig(ncurses)
 %endif
+
+BuildSystem:	cmake
+BuildOption:	-DENABLE_BCUNIT_CURSES:BOOL=%{?with_nurses:ON}%{?!with_curses:OFF}
+BuildOption:	-DENABLE_BCUNIT_EXAMPLE:BOOL=%{?with_example:ON}%{?!with_example:OFF}
+BuildOption:	-DENABLE_BCUNIT_TEST:BOOL=%{?with_test:ON}%{?!with_test:OFF}
+
+%patchlist
+bcunit-5.3.5-cmake-fix_cmake_path.patch
+https://git.pld-linux.org/?p=packages/bcunit.git;a=blob_plain;f=bcunit-examples.patch
 
 %description
 This is BCUnit, a fork of the defunct project CUnit (see below), with several
@@ -94,18 +104,4 @@ This package contains development files for %{name}.
 %{_datadir}/cmake/%{oname}
 
 #---------------------------------------------------------------------------
-
-%prep
-%autosetup -p1 -n %{name}-%{?commit:%{commit}}%{!?commit:%{version}}
-
-%build
-%cmake \
-	-DENABLE_CURSES:BOOL=%{?with_ncurses:ON}%{?!with_ncurses:OFF} \
-	-DBUILD_TEST:BOOL=%{?with_test:ON}%{?!with_test:OFF} \
-	-G Ninja
-
-%ninja_build #-C build
-
-%install
-%ninja_install -C build
 
