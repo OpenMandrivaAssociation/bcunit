@@ -10,7 +10,7 @@
 
 %bcond_without curses
 %bcond_with example
-%bcond_without test
+%bcond_with test
 
 Name:		bcunit
 Version:	5.4.42
@@ -33,7 +33,7 @@ BuildOption:	-DENABLE_BCUNIT_TEST:BOOL=%{?with_test:ON}%{?!with_test:OFF}
 
 %patchlist
 bcunit-5.3.5-cmake-fix_cmake_path.patch
-https://git.pld-linux.org/?p=packages/bcunit.git;a=blob_plain;f=bcunit-examples.patch
+bcunit-5.4.42-cmake-include_headers_path.patch
 
 %description
 This is BCUnit, a fork of the defunct project CUnit (see below), with several
