@@ -13,7 +13,7 @@
 %bcond_with test
 
 Name:		bcunit
-Version:	5.4.42
+Version:	5.4.50
 Release:	1
 License:	GPLv2+
 Summary:	A Unit Testing Framework for C, based on (abandoned) CUnit
